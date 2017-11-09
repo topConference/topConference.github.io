@@ -1,227 +1,179 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+﻿<html lang="zh-CN">
 
-    <title>Off Canvas Template for Bootstrap</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>topConference</title>
+  <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+</head>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<body>
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a class="navbar-brand" href="">topConference</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- Custom styles for this template -->
-    <link href="css/offcanvas.css" rel="stylesheet">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav ml-auto">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+        <li class="nav-item dropdown">
+          <button class="btn btn-light dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user-circle"></i>
+          </button>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-  <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">topConference</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#">主页</a></li>
-        <li class="active"><a href="#">我的会议日程 <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">添加会议</a></li>
-        <li><a href="#">我感兴趣</a></li>
-      </ul>
-      <ul class="nav navbar-nav">
-        
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search conference">
-        </div>
-        <button type="submit" class="btn btn-default">Search</button>
-      </form>
-        <li class="dropdown pull-right">
-          <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">账号 <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">账号管理</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">登陆</a></li>
-            <li><a href="#">下线</a></li>
-          </ul>
+          <div class="dropdown-menu dropdown-menu-right">
+            <form class="px-4 py-3">
+              <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"> Remember me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary ">Sign in
+                <i class="fa fa-sign-in"></i>
+              </button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">New around here? Sign up</a>
+            <a class="dropdown-item" href="#">Forgot password?</a>
+          </div>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+    </div>
+  </nav>
 
-    <div class="container">
-
-      <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
-          <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="row px-2">
+              <input class="form-control w-25" placeholder="search..." aria-label="search..." id="searchInput">
+              <div class="dropdown ml-auto">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                  sort
+                  <i class="fa fa-sort-amount-asc"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item">deadline</a>
+                  <a class="dropdown-item">start_date</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-             <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-             <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-             <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-             <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-             <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-            <div class="caption">
-            <h4><a href="#">会议名称</a></h4>
-            <p>主题： </p>
-            <p>时间： </p>
-            <p>地点： </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-
-            </div>
-            </div>
-            </div>
-            
-            
-          </div><!--/row-->
-<nav aria-label="Page navigation">
-  <ul class="pagination pagination-centered pagination-small">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
-        </div><!--/.col-xs-12.col-sm-9-->
-
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">即将到来</a>
-            <a href="#" class="list-group-item">历史会议</a>
+          <div class="card-body" id="confs">
+            <template id="confTemplate">
+              <div class="conf" style="margin-bottom:10px;padding:1px;" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}"
+                data-address="{{address}}" data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}">
+                <table border="0" width="100%" cellspacing="0" cellpadding="0" style="margin:1px;padding:1px;table-layout:fixed;">
+                  <tr>
+                    <td rowspan="2" style="padding:1px;margin:0px;vertical-align:middle;width:114px; ">
+                      <img style="margin:2px;vertical-align:middle;width:110px;max-height:30px;" src="{{img}}" class="img">
+                    </td>
+                    <td colspan="2" style="margin:1px;padding:1px;vertical-align:middle;">
+                      <h4 class="text-primary" style="padding:1px;margin:1px;font-size:13px;">
+                        <p class="topic">{{topic}}</p>
+                      </h4>
+                    </td>
+                    <td nowrap="" rowspan="2" style="padding:1px; vertical-align:middle;width:115px;">
+                      <p class="deadline">{{deadline}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="300px" valign="top" style="padding:1px;margin:0px;vertical-align:middle;font-size:12px;line-height:13px;">
+                      <div class="date" style="padding:0px;margin:0px;">{{start_date}} - {{end_date}}</div>
+                    </td>
+                    <td width="200px" style="padding:1px;margin:0px;text-align:left;vertical-align:middle;">
+                      <p class="address">{{address}}</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </template>
           </div>
-        </div><!--/.sidebar-offcanvas-->
-      </div><!--/row-->
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="row px-2">
+              <input class="form-control mx-auto" placeholder="my conference" aria-label="my conference" id="searchInput2">
+            </div>
+          </div>
+          <div class="card-body" id="confs">
+            <p class="text-center">sign in to see...</p>
+            <template id="myConfTemplate">
+              <div class="conf" style="margin-bottom:10px;padding:1px;" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}"
+                data-address="{{address}}" data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}">
+                <table border="0" width="100%" cellspacing="0" cellpadding="0" style="margin:1px;padding:1px;table-layout:fixed;">
+                  <tr>
+                    <td rowspan="2" style="padding:1px;margin:0px;vertical-align:middle;width:114px; ">
+                      <img style="margin:2px;vertical-align:middle;width:110px;max-height:30px;" src="{{img}}" class="img">
+                    </td>
+                    <td colspan="2" style="margin:1px;padding:1px;vertical-align:middle;">
+                      <h4 class="text-primary" style="padding:1px;margin:1px;font-size:13px;">
+                        <p class="topic">{{topic}}</p>
+                      </h4>
+                    </td>
+                    <td nowrap="" rowspan="2" style="padding:1px; vertical-align:middle;width:115px;">
+                      <p class="deadline">{{deadline}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="300px" valign="top" style="padding:1px;margin:0px;vertical-align:middle;font-size:12px;line-height:13px;">
+                      <div class="date" style="padding:0px;margin:0px;">{{start_date}} - {{end_date}}</div>
+                    </td>
+                    <td width="200px" style="padding:1px;margin:0px;text-align:left;vertical-align:middle;">
+                      <p class="address">{{address}}</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </template>
 
-      <hr>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <footer class="blog-footer">
-      <p>build by topConference Team</p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
+  </div>
 
-    </div><!--/.container-->
+  <!-- <footer class="blog-footer">
+    <p>build by topConference Team</p>
+    <a href="">Back to top</a>
+    </p>
+  </footer> -->
+  <div class="alert alert-light text-primary" role="alert" id="addBookSuccess">add book success</div>
+  <div class="alert alert-light text-danger" role="alert" id="addBookError">add book error</div>
+  <div class="alert alert-light text-info" role="alert" id="updateBookSuccess">update book success</div>
+  <div class="alert alert-light text-danger" role="alert" id="updateBookError">update book error</div>
+  <div class="alert alert-light text-info" role="alert" id="deleteBookSuccess">delete book success</div>
+  <div class="alert alert-light text-danger" role="alert" id="deleteBookError">delete book error</div>
+  <div class="alert alert-light text-info" role="alert" id="addAuthorSuccess">add author success</div>
+  <div class="alert alert-light text-danger" role="alert" id="addAuthorError">add author error</div>
+  <div class="alert alert-light text-danger" role="alert" id="loadBookError">load book error</div>
+  <div class="alert alert-light text-danger" role="alert" id="loadAuthorError">load author error</div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/mustache.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="offcanvas.js"></script>
-  </body>
 </html>

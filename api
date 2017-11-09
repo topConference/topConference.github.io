@@ -1,0 +1,29 @@
+/api/conf get
+{conferences:{{    
+topic
+    deadline
+    start_date
+    end_date
+    url
+    address
+    img
+    h5index},{},{}...}}
+/api/login post(username, password),{token:""}
+/api/signup post(username, password) {}
+/api/user get(username, token)
+{
+	conferences:{}
+}
+/api/conf post(username, token, conference{"topic":1,"fdas":23,...})
+/api/conf delete(username, token, conference)
+
+conference{
+    topic
+    deadline
+    start_date
+    end_date
+    url
+    address
+    img
+    h5index
+    }
