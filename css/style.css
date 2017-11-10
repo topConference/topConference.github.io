@@ -1,7 +1,97 @@
+
+.conf {
+  margin: 0.1em; 
+  /* padding-top: 0.5em; */
+  /* width: 100%; */
+  /* display: grid;
+  grid-template-columns:110px 70% 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+   grid-template-areas: "a b c"
+   "a b c"
+   "a d e"; */
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.12);
+  position : relative;
+}
+.conf .add{
+  
+  position: absolute;
+  bottom: 0.3em;
+  right: 0.5em;
+  color: dodgerblue;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
+}
+.conf .add-cal{
+  right: 1.5em;
+  color: forestgreen;
+}
+.conf .add:hover{
+  color: #80DEEA
+}
+.conf .address:hover{
+  color: cornflowerblue
+}
+/* .conf .img{ */
+  /* grid-area: a; */
+  /* width: 100%; */
+  /* max-height: 30px; */
+  /* padding: 10px; */
+  /* margin:2px;vertical-align:middle;width:110px;max-height:30px; */
+/* } */
+.conf .img{
+  margin:2px;vertical-align:middle;width:110px;max-height:30px;
+}
+.conf .topic{
+  /* grid-area: b; */
+  padding:1px;margin-top:1em;
+}
+
+.conf .deadline{
+  /* grid-area: c; */
+}
+
+.conf .date{
+  /* grid-area: d; */
+  color: lightseagreen
+}
+
+.conf .address{
+  /* grid-area: e; */
+} 
+
+
+.round.blue {
+    background-color: #3EA6CE;
+}
+
+.round.round-lg {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    font-size: 1.5em;
+}
+.round {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    /* background-color: #222; */
+    /* color: #FFF; */
+    text-align: center;
+}
+.topic{
+  font-size: 1.2em;
+  color:#3EA6CE
+}
 .address{
   color: #999
 }
 .deadline{
+  /* vertical-align:middle; */
+  font-size:1em;
   color: #607D8B
 }
 nav{
@@ -23,13 +113,12 @@ nav{
     padding: 0 !important;
     /*margin: 0 !important;*/
 }
-.conf {
-    margin: 2%;
-    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.12);
-    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    text-align: center;
-}
+/* .conf { */
+    /* margin: 2%; */
+    /* -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); */
+    /* transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); */
+    /* text-align: center; */
+/* } */
 
 /* .conf:hover {
     -webkit-transform: scale(1.20, 1.20);
