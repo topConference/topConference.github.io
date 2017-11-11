@@ -9,6 +9,20 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+  <style type="text/css"> 
+	div.panel,p.flip
+	{
+	margin:0px;
+	padding:5px;
+	text-align:center;
+	border:solid 1px #c3c3c3;
+	}
+	div.panel
+	{
+	height:180px;
+	display:none;
+	}
+  </style>
 </head>
 
 <body>
@@ -112,8 +126,8 @@
       </div>
 
       <!-- my conference -->
-      <div class="col-lg-4">
-        <div class="card card-default">
+      <div class="col-lg-4" id = "rightSide">
+        <div class="card card-default" >
           <div class="card-header">
             <div class="row px-2">
               <input class="form-control mx-auto" placeholder="my conference" aria-label="my conference" id="searchInput2">
@@ -139,18 +153,42 @@
 			  </br>
               <div class="form-check">
                 <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input"> Remember me
+                  <input type="checkbox" class="form-check-input" > Remember me
                 </label>
 				<button type="submit" class="btn btn-primary " style = "float:right">Sign in
                 <i class="fa fa-sign-in"></i>
               </button>
               </div>
+			  <div class="px-2 pt-2">
+				<a><p class="signIn text-primary" >Sign up</p></a>
+				<a><p class="signIn text-primary" >Forget password</p></a>
+			  </div>
             </form>
-            <div class="px-2 pt-2">
-            <a class="" href=""><p>New around here? Sign up</p></a>
-            <a class="" href="">Forgot password?</a>
-            </div>
-            <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+			
+			<div class="panel">
+			 <form class="px-3" id="signInForm">
+              <!-- <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+              </div> -->
+              <div class="input-group">
+				<label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-user"></i></label>
+                <input type="Username" class="form-control username" id="exampleDropdownFormUsername" placeholder="Username">
+              </div>
+			  </br>
+              <div class="input-group">
+                <label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-lock"></i></label>
+                <input type="password" class="form-control password" id="exampleDropdownFormPassword" placeholder="Password">
+              </div>
+			  </br>
+              <div class="form-check">
+				<button type="submit" class="btn btn-primary " style = "float:right">SignUp
+                <i class="fa fa-sign-in"></i>
+              </button>
+			  </div>
+			</form>
+			</br>
+			<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
             <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
             <!-- <a href="" id="signOut">Sign out</a> -->
 
@@ -194,6 +232,16 @@
   </script>
   <script src = "js/map.js"></script>
   <script src = "js/jquery.js"></script>
+  <script>
+	$(document).ready(function(){
+	  $(".signIn").click(function(){
+		$("#signInForm").css('display','none'); 
+		$("panel").css('display','block'); 
+		$(".panel").slideDown("slow");
+	  });
+	});
+  </script>
+  </script>
 
 </body>
 
