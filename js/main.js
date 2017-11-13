@@ -120,7 +120,7 @@ $(function () {
 
     const getUser = () => {
         $.ajax({
-            url: `http://do1.bilabila.tk:3000/api/users/${user.userId}?access_token=${user.id}`,
+            url: `http://localhost:3000/api/users/${user.userId}?access_token=${user.id}`,
             type: 'get',
             success: (r) => {
                 userInfo = r;
@@ -190,7 +190,7 @@ $(function () {
     }
     const getConf = () => {
         $.ajax({
-            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10',
+            url: 'http://localhost:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10',
             type: 'get',
             success: (result) => {
                 removeConf();
@@ -210,7 +210,7 @@ $(function () {
     const login = (data) => {
         console.log(data);
         $.ajax({
-            url: 'http://do1.bilabila.tk:3000/api/users/login',
+            url: 'http://localhost:3000/api/users/login',
             type: 'post',
             data: data,
             datatype: 'json',
@@ -236,7 +236,7 @@ $(function () {
         data: {
             conferences: userInfo.conferences
         },
-        url: `http://do1.bilabila.tk:3000/api/users/${user.userId}?access_token=${user.id}`,
+        url: `http://localhost:3000/api/users/${user.userId}?access_token=${user.id}`,
     });
 
     //add to my conferences
@@ -274,7 +274,7 @@ $(function () {
                 'password': $(this).find('.password').val()
             };
             $.ajax({
-                url: 'http://do1.bilabila.tk:3000/api/users',
+                url: 'http://localhost:3000/api/users',
                 datatype: 'json',
                 type: 'post',
                 data: data,
