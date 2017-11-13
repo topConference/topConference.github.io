@@ -1,5 +1,5 @@
-const CLIENT_ID = '573411921227-pplijq3cjqvetkiadiaki154mcg6omhg.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyAPqzW2hWJXCPlKRI5v4BmtuT1q7pa5Ue8';
+const CLIENT_ID = '990871840937-pmo8nnnoahejqsnkp6rvkbsbiqbik0g1.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyCEv9sqIJw-j0HCrp8RN-76zIEaGPJi2uQ';
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 // Authorization scopes required by the API; multiple scopes can be
@@ -190,7 +190,7 @@ $(function () {
     }
     const getConf = () => {
         $.ajax({
-            url: 'http://localhost:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10',
+            url: 'http://localhost:3000/api/conferences?filter[fields][info]&filter[top_info]',
             type: 'get',
             success: (result) => {
                 removeConf();
