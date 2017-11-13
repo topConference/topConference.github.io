@@ -1,19 +1,38 @@
+.cal-alert{
+  top:0;
+}
+.back-to-top {
+    display: none;
+    position: fixed;
+    left: 40px;
+    bottom: 40px;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    transition-duration: 0.3s;
+    z-index: 10;
+    color: #999
+}
+#rightDiv {
+    position: fixed;
+    right: 30;
+    	height:100%;
+
+}
+
+.conf .delete{
+  position: absolute;
+  bottom: 0.3em;
+  right: 0.5em;
+  color: dodgerblue;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
+}
 
 .conf {
   margin: 0.1em; 
-  /* padding-top: 0.5em; */
-  /* width: 100%; */
-  /* display: grid;
-  grid-template-columns:110px 70% 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-   grid-template-areas: "a b c"
-   "a b c"
-   "a d e"; */
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.12);
   position : relative;
 }
 .conf .add{
-  
   position: absolute;
   bottom: 0.3em;
   right: 0.5em;
@@ -30,72 +49,23 @@
 .conf .address:hover{
   color: cornflowerblue
 }
-/* .conf .img{ */
-  /* grid-area: a; */
-  /* width: 100%; */
-  /* max-height: 30px; */
-  /* padding: 10px; */
-  /* margin:2px;vertical-align:middle;width:110px;max-height:30px; */
-/* } */
-.conf .img{
-  margin:2px;vertical-align:middle;width:110px;max-height:30px;
-}
-.conf .topic{
-  /* grid-area: b; */
-  padding:1px;margin-top:1em;
-}
-
-.conf .deadline{
-  /* grid-area: c; */
-}
-
 .conf .date{
-  /* grid-area: d; */
   color: lightseagreen
 }
 
-.conf .address{
-  /* grid-area: e; */
-} 
-
-
-.round.blue {
-    background-color: #3EA6CE;
-}
-
-.round.round-lg {
-    height: 40px;
-    width: 40px;
-    line-height: 40px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    font-size: 1.5em;
-}
-.round {
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    /* background-color: #222; */
-    /* color: #FFF; */
-    text-align: center;
-}
-.topic{
+.conf .topic{
   font-size: 1.2em;
   color:#3EA6CE
 }
-.address{
+.conf .address{
   color: #999
 }
-.deadline{
-  /* vertical-align:middle; */
+.conf .deadline{
   font-size:1em;
   color: #607D8B
 }
 nav{
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.12);
+  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.12);
 }
 
 .alert {
@@ -108,70 +78,14 @@ nav{
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
 .nopadding {
     padding: 0 !important;
     /*margin: 0 !important;*/
 }
-/* .conf { */
-    /* margin: 2%; */
-    /* -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); */
-    /* transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); */
-    /* text-align: center; */
-/* } */
 
-/* .conf:hover {
-    -webkit-transform: scale(1.20, 1.20);
-    transform: scale(1.20, 1.20);
-    z-index: 1;
+#mainDiv {
+  padding-top: 5rem;
 }
-
-.conf:after {
-    content: "";
-    border-radius: 5px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.conf:hover::after {
-    opacity: 1;
-} */
-
-body {
-    padding-top: 5rem;
-}
-
-
-/*
- * Globals
- */
-
-/* body { */
-  /* font-family: Georgia, "Times New Roman", Times, serif; */
-  /* color: #555; */
-/* } */
-
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-  margin-top: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  color: #333;
-}
-
-
-/*
- * Override Bootstrap's default container.
- */
 
 @media (min-width: 1200px) {
   .container {
@@ -179,155 +93,19 @@ h6, .h6 {
   }
 }
 
-
-/*
- * Masthead for nav
- */
-
-.blog-masthead {
-  background-color: #428bca;
-  -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
-          box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
-}
-
-/* Nav links */
-.blog-nav-item {
-  position: relative;
-  display: inline-block;
-  padding: 10px;
-  font-weight: 500;
-  color: #cdddeb;
-}
-.blog-nav-item:hover,
-.blog-nav-item:focus {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* Active state gets a caret at the bottom */
-.blog-nav .active {
-  color: #fff;
-}
-.blog-nav .active:after {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -5px;
-  vertical-align: middle;
-  content: " ";
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid;
-  border-left: 5px solid transparent;
-}
-
-
-/*
- * Blog name and description
- */
-
-.blog-header {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-.blog-title {
-  margin-top: 30px;
-  margin-bottom: 0;
-  font-size: 60px;
-  font-weight: normal;
-}
-.blog-description {
-  font-size: 20px;
-  color: #999;
-}
-
-
-/*
- * Main column and sidebar layout
- */
-
-.blog-main {
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-/* Sidebar modules for boxing content */
-.sidebar-module {
-  padding: 15px;
-  margin: 0 -15px 15px;
-}
-.sidebar-module-inset {
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-.sidebar-module-inset p:last-child,
-.sidebar-module-inset ul:last-child,
-.sidebar-module-inset ol:last-child {
-  margin-bottom: 0;
-}
-
-
-/* Pagination */
-.pager {
-  margin-bottom: 60px;
-  text-align: left;
-}
-.pager > li > a {
-  width: 140px;
-  padding: 10px 20px;
-  text-align: center;
-  border-radius: 30px;
-}
-
-
-/*
- * Blog posts
- */
-
-.blog-post {
-  margin-bottom: 60px;
-}
-.blog-post-title {
-  margin-bottom: 5px;
-  font-size: 40px;
-}
-.blog-post-meta {
-  margin-bottom: 20px;
-  color: #999;
-}
-
-
-/*
- * Footer
- */
-
-.blog-footer {
-  padding: 40px 0;
-  color: #999;
-  text-align: center;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e5e5e5;
-}
-
-.blog-footer p:last-child {
-  margin-bottom: 0;
-}
-
   /* Always set the map height explicitly to define the size of the div
    * element that contains the map. */
+   /* #mapDiv {
+     position: absolute;
+     top: 0;
+     left: 0
+   } */
   #map {
 	height: 40%;
 	width: 100%;
   }
   /* Optional: Makes the sample page fill the window. */
-  html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-  }
-  #floating-panel {
+  /* #floating-panel {
 	position: absolute;
 	top: 10px;
 	left: 25%;
@@ -338,17 +116,8 @@ h6, .h6 {
 	text-align: center;
 	font-family: 'Roboto','sans-serif';
 	line-height: 30px;
-	padding-left: 10px;
+  padding-left: 10px; 
+} */
 
-}
-
-.map{
-	width:100%;
-	height:100%;
-}
-
-#rightSide{
-	height:100%;
-}
 
 

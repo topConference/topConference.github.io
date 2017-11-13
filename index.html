@@ -3,29 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-signin-client_id" content="990871840937-btpurlb8hetgq2fpno01rg7l86d0ln4j.apps.googleusercontent.com">
+  <!-- <meta name="google-signin-client_id" content="990871840937-btpurlb8hetgq2fpno01rg7l86d0ln4j.apps.googleusercontent.com"> -->
   <title>topConference</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link href="css/style.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
-  <style type="text/css"> 
-	div.panel,p.flip
-	{
-	margin:0px;
-	padding:5px;
-	text-align:center;
-	border:solid 1px #c3c3c3;
-	}
-	div.panel
-	{
-	height:180px;
-	display:none;
-	}
-  </style>
+  <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
     <a class="navbar-brand" href="">topConference</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
@@ -58,17 +44,17 @@
               </button>
             </form>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">New around here? Sign up</a>
-            <a class="dropdown-item" href="#">Forgot password?</a>
+            <a class="dropdown-item">New around here? Sign up</a>
+            <a class="dropdown-item">Forgot password?</a>
           </div>
         </li>
       </ul>
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container" id="mainDiv">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-8" id="leftDiv">
         <div class="card card-default">
           <div class="card-header">
             <div class="row px-2">
@@ -88,37 +74,33 @@
           </div>
           <div class="card-body" id="confs">
             <template id="confTemplate">
-              <div class="conf" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}" data-img="{{img}}"
-                data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}">
-                <!-- <img class="img col col-2"src="{{img}}" >
-                <p class="topic col col-8">{{topic}}</p>
-                <p class="deadline col col-2">{{deadline}}</p>
-                <p class="date col col-4">{{start_date}} - {{end_date}}</p>
-                <p class="address col col-4">{{address}}</p> -->
+              <div class="conference conf" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}"
+                data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}"
+                data-toggle="modal" data-target="#confModal">
                 <table class="conf-table" border="0" width="100%" cellspacing="0" cellpadding="0">
                   <tr>
                     <td rowspan="2" style="padding:.5em;margin:0;vertical-align:middle;width:114px; ">
                       <img src="{{img}}" class="img">
                     </td>
-                    <td colspan="2" style="margin:1px;padding:1px;vertical-align:middle;">
-                      <p class="topic text-primary">{{topic}}</p>
+                    <td colspan="2" class="p-3">
+                      <a href="{{url}}" target="_blank" class="topic text-primary">{{topic}}</a>
                     </td>
-                    <td nowrap="" rowspan="2" style="padding:1px; vertical-align:middle;width:115px;">
+                    <td nowrap="" rowspan="2" style="vertical-align:middle;width:115px;">
                       <p class="deadline">{{deadline}}</p>
                     </td>
                   </tr>
                   <tr>
                     <td width="300px" style="padding:1px;margin:0px;vertical-align:middle;">
-                      <p class="date">{{start_date}} - {{end_date}}</p>
+                      <p class="date pl-3">{{start_date}} {{end_date}}</p>
                     </td>
                     <td width="200px" style="padding:1px;margin:0px;text-align:left;vertical-align:middle;">
                       <p class="address">{{address}}</p>
                     </td>
                   </tr>
-                       
+
                 </table>
-                <i class="add add-cal fa fa-calendar-plus-o fa-2x"></i>
-                <i class="add fa fa-plus-circle fa-2x"></i>
+                <i class="add add-cal fa fa-calendar-plus-o fa-2x d-none"></i>
+                <i class="add fa fa-plus-circle fa-2x d-none"></i>
               </div>
             </template>
           </div>
@@ -126,123 +108,149 @@
       </div>
 
       <!-- my conference -->
-      <div class="col-lg-4" id = "rightSide">
-        <div class="card card-default" >
+      <div class="col-lg-4 " id="rightDiv">
+        <div class="card card-default">
           <div class="card-header">
             <div class="row px-2">
-              <input class="form-control mx-auto" placeholder="my conference" aria-label="my conference" id="searchInput2">
+              <input class="col form-control mx-auto" placeholder="my conference" aria-label="my conference" id="mySearchInput">
+              <button class="btn btn-outline-primary ml-2 fa fa-plus my-auto" id="addMyConfBtn" data-toggle="modal" data-target="#confModal"></button>
             </div>
           </div>
-          <div class="card-body" id="confs">
+          <div class="card-body nopadding" id="myConfs">
+            <template id="myConfTemplate">
+              <div class="conference conf myConf row p-2" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}"
+                data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}"
+                data-remark="{{remark}}" data-toggle="modal" data-target="#confModal">
+                <div class="col-8 text-info text-truncate nopadding topic">{{topic}}</div>
+                <!-- <div class="col ml-auto text-truncate">{{start_date} {{end-data}}</div> -->
+                <div class="col text-truncate nopadding address address">{{address}}</div>
+                <!-- <i class="delete fa fa-plus-circle fa-2x"></i> -->
+              </div>
+            </template>
+            <form class="px-3 pt-2" id="logInForm">
+              <div class="collapse" id="emailCollapse">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                  <input type="Email" class="form-control email" placeholder="Email">
+                </div>
+              </div>
+              <div class="input-group pt-2">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input type="Username" class="form-control username" placeholder="Username">
+              </div>
+              <div class="input-group pt-2">
+                <span class="input-group-addon">
+                  <i class="fa fa-lock"></i>
+                </span>
+                <input type="password" class="form-control password" placeholder="Password">
+              </div>
 
-            <!-- <p class="text-center">sign in to see...</p> -->
-            <form class="px-3" id="signInForm">
-              <!-- <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-              </div> -->
-              <div class="input-group">
-				<label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-user"></i></label>
-                <input type="Username" class="form-control username" id="exampleDropdownFormUsername" placeholder="Username">
+              <div class="input-group pt-2">
+                <button type="submit" class="btn btn-primary btn-block" id="logInBtn">Log in
+                  <i class="fa fa-sign-in"></i>
+                </button>
               </div>
-			  </br>
-              <div class="input-group">
-                <label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-lock"></i></label>
-                <input type="password" class="form-control password" id="exampleDropdownFormPassword" placeholder="Password">
-              </div>
-			  </br>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" > Remember me
-                </label>
-				<button type="submit" class="btn btn-primary " style = "float:right">Sign in
-                <i class="fa fa-sign-in"></i>
-              </button>
-              </div>
-			  <div class="px-2 pt-2">
-				<a><p class="signIn text-primary" >Sign up</p></a>
-				<a><p class="signIn text-primary" >Forget password</p></a>
-			  </div>
+              <div class="text-primary" id="toggleBtn" data-toggle="collapse" data-target="#emailCollapse" aria-expanded="false" aria-controls="emailCollapse">signup | login</div>
+              <span class="text-secondary">Forget password</span>
             </form>
-			
-			<div class="panel">
-			 <form class="px-3" id="signInForm">
-              <!-- <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-              </div> -->
-              <div class="input-group">
-				<label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-user"></i></label>
-                <input type="Username" class="form-control username" id="exampleDropdownFormUsername" placeholder="Username">
-              </div>
-			  </br>
-              <div class="input-group">
-                <label class = "input-group-addon"style = "width:50px"><i class = "glyphicon glyphicon-lock"></i></label>
-                <input type="password" class="form-control password" id="exampleDropdownFormPassword" placeholder="Password">
-              </div>
-			  </br>
-              <div class="form-check">
-				<button type="submit" class="btn btn-primary " style = "float:right">SignUp
-                <i class="fa fa-sign-in"></i>
-              </button>
-			  </div>
-			</form>
-			</br>
-			<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-            <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-            <!-- <a href="" id="signOut">Sign out</a> -->
+          </div>
+          <!-- cardbody -->
 
+          <div class="map" id="mapDiv">
+            <!-- <div id="floating-panel" hidden>
+              <input id="address" type="textbox" hidden>
+              <input id="submit" type="button" hidden>
+            </div> -->
+            <div id="map"></div>
           </div>
         </div>
-		<div class = "map">
-			<div id="floating-panel" hidden>
-			  <input id="address" type="textbox" hidden>
-			  <input id="submit" type="button" hidden>
-			</div>
-			<div id="map"></div>
-		</div>
-      </div>
-	</div>
+        <!-- card -->
 
+      </div>
+      <!-- rightslide -->
+
+    </div>
+    <!-- row -->
+  </div>
+  <!-- container -->
+
+  <!-- modal -->
+  <div class="modal fade" id="confModal" tabindex="-1" role="dialog" aria-labelledby="confModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- todo omit -->
+          <h5 class="modal-title text-truncate">topic</h5>
+          <button type="button" class="close fa fa-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pb-1">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <label class="col-form-label topic">topic</label>
+                <input type="text" class="form-control topic"></input>
+              </div>
+              <div class="col-6">
+                <label class="col-form-label start_date">start_date</label>
+                <input type="text" class="form-control start_date"></input>
+              </div>
+              <div class="col-6">
+                <label class="col-form-label end_date ">end_date</label>
+                <input type="text" class="form-control end_date">
+              </div>
+              <div class="col-6">
+                <label class="col-form-label deadline">deadline</label>
+                <input type="text" class="form-control deadline">
+              </div>
+              <div class="col-6">
+                <label class="col-form-label address">address</label>
+                <input type="text" class="form-control address">
+              </div>
+              <div class="col-12">
+                <label class="col-form-label url">url</label>
+                <input type="text" class="form-control url">
+              </div>
+              <div class="col-12">
+                <label class="col-form-label extra">remark</label>
+                <textarea type="text" class="form-control remark"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary add fa fa-plus-circle" id="addBtn" data-dismiss="modal"> add</button>
+            <button class="btn btn-outline-primary addCal fa fa-calendar" disabled id="addCalBtn" data-dismiss="modal"> add to calendar</button>
+            <button class="btn btn-danger delete fa fa-trash-o" id="delBtn" data-dismiss="modal"> delete</button>
+            <button class="btn btn-info update fa fa-save " id="updateBtn" data-dismiss="modal"> update</button>
+            <!-- <button class="btn btn-secondary fa fa-ban" data-dismiss="modal"> cancel</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal -->
+  <div class="back-to-top d-none" id="back-to-top" style="display: block;">
+    <i class="fa fa-arrow-up"></i>
   </div>
 
-  <!-- <footer class="blog-footer">
-    <p>build by topConference Team</p>
-    <a href="">Back to top</a>
-    </p>
-  </footer> -->
-  <div class="alert alert-light text-primary" role="alert" id="addBookSuccess">add book success</div>
-  <div class="alert alert-light text-danger" role="alert" id="addBookError">add book error</div>
-  <div class="alert alert-light text-info" role="alert" id="updateBookSuccess">update book success</div>
-  <div class="alert alert-light text-danger" role="alert" id="updateBookError">update book error</div>
-  <div class="alert alert-light text-info" role="alert" id="deleteBookSuccess">delete book success</div>
-  <div class="alert alert-light text-danger" role="alert" id="deleteBookError">delete book error</div>
-  <div class="alert alert-light text-info" role="alert" id="addAuthorSuccess">add author success</div>
-  <div class="alert alert-light text-danger" role="alert" id="addAuthorError">add author error</div>
-  <div class="alert alert-light text-danger" role="alert" id="loadBookError">load book error</div>
-  <div class="alert alert-light text-danger" role="alert" id="loadAuthorError">load author error</div>
+  <div class="alert alert-light text-success" role="alert" id="calAlert"></div>
+  <div class="alert alert-light text-primary" role="alert" id="primaryAlert"></div>
+  <div class="alert alert-light text-danger" role="alert" id="dangerAlert"></div>
+  <div class="alert alert-light text-info" role="alert" id="infoAlert"></div>
   <script src="js/jquery.min.js"></script>
   <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
   <script src="js/mustache.min.js"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <script src="js/bootstrap.min.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk"></script>
+  <script async defer src="https://apis.google.com/js/api.js"></script>
   <script src="js/main.js"></script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk&callback=initMap">
-  </script>
-  <script src = "js/map.js"></script>
-  <script src = "js/jquery.js"></script>
-  <script>
-	$(document).ready(function(){
-	  $(".signIn").click(function(){
-		$("#signInForm").css('display','none'); 
-		$("panel").css('display','block'); 
-		$(".panel").slideDown("slow");
-	  });
-	});
-  </script>
-  </script>
-
+  <!-- use onload is really slow -->
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk&callback=initMap"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"> -->
 </body>
 
 </html>

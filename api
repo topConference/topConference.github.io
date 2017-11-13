@@ -1,3 +1,16 @@
+/api/login post(username, password),{token:""}
+/api/signup post(username, password) {}
+/api/user get(username, token)
+/api/conf post(username, token, conference{"topic":1,"fdas":23,...})
+/api/conf delete(username, token, conference)
+/api/conf get
+s
+npm install --save loopback-connector-mongodb
+npm install -g loopback-cli
+lb datasource mongoDS --connector mongoDB
+lb model
+lb acl
+http://localhost:3000/api/conferences?filter={%22fields%22:{%22info%22:false}}
 /api/conf get
 {conferences:{{    
 topic
@@ -16,7 +29,15 @@ topic
 }
 /api/conf post(username, token, conference{"topic":1,"fdas":23,...})
 /api/conf delete(username, token, conference)
-
+conferences={
+    topic:"hit-top",
+    deadline:"20180101",
+    start_date:"20180101",
+    end_date:"20180105",
+    url:"jwts.hit.edu.cn",
+    address:"harbin",
+    img:""
+}
 conference{
     topic
     deadline
@@ -26,4 +47,10 @@ conference{
     address
     img
     h5index
-    }
+}
+
+
+npm install --save loopback-connector-mongodb
+npm install -g loopback-cli
+lb datasource mongoDS --connector mongoDB
+lb model
