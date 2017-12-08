@@ -64,6 +64,8 @@ const handleClientLoad = () => {
     gapi.load('client:auth2', initClient);
 }
 
+//disable scrollbar
+// $("body").css("overflow", "auto");
 //on ready
 $(function () {
     
@@ -117,18 +119,21 @@ $(function () {
         let address = $(e.target).text();
         geocodeAddress(geocoder, map, address);
     });
-
+    const myAddConf = (conf) => {
+        $myConfs.append(Mustache.render(myConfTemplate, conf));
+    }
     const getUser = () => {
         $.ajax({
             url: `http://do1.bilabila.tk:3000/api/users/${user.userId}?access_token=${user.id}`,
             type: 'get',
             success: (r) => {
+                $myConfs.html('');
                 userInfo = r;
                 if (!("conferences" in userInfo)) {
                     //add
                 } else {
                     $.each(r.conferences, (i, conf) => {
-                        console.log(conf);
+                        // console.log(conf);
                         myAddConf(conf);
                     });
                 }
@@ -147,20 +152,16 @@ $(function () {
         $confs.append(Mustache.render(confTemplate, conf));
     }
 
-    const myAddConf = (conf) => {
-        $myConfs.append(Mustache.render(myConfTemplate, conf));
-    }
-
     const searchMyConf = (input) => {
         let t = input.trim();
         $('#rightDiv .conf').each((i, a) => {
             if (
-                $(a).attr('data-topic').indexOf(t) != -1 ||
+                $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
                 $(a).attr('data-deadline').indexOf(t) != -1 ||
-                $(a).attr('data-url').indexOf(t) != -1 ||
-                $(a).attr('data-address').indexOf(t) != -1 ||
-                $(a).attr('data-img').indexOf(t) != -1 ||
-                $(a).attr('data-h5index').indexOf(t) != -1 ||
+                // $(a).attr('data-url').indexOf(t) != -1 ||
+                $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
+                // $(a).attr('data-img').indexOf(t) != -1 ||
+                // $(a).attr('data-h5index').indexOf(t) != -1 ||
                 $(a).attr('data-end_date').indexOf(t) != -1 ||
                 $(a).attr('data-start_date').indexOf(t) != -1) {
                 $(a).removeClass("d-none");
@@ -174,12 +175,12 @@ $(function () {
         let t = input.trim();
         $('#leftDiv .conf').each((i, a) => {
             if (
-                $(a).attr('data-topic').indexOf(t) != -1 ||
+                $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
                 $(a).attr('data-deadline').indexOf(t) != -1 ||
-                $(a).attr('data-url').indexOf(t) != -1 ||
-                $(a).attr('data-address').indexOf(t) != -1 ||
-                $(a).attr('data-img').indexOf(t) != -1 ||
-                $(a).attr('data-h5index').indexOf(t) != -1 ||
+                // $(a).attr('data-url').indexOf(t) != -1 ||
+                $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
+                // $(a).attr('data-img').indexOf(t) != -1 ||
+                // $(a).attr('data-h5index').indexOf(t) != -1 ||
                 $(a).attr('data-end_date').indexOf(t) != -1 ||
                 $(a).attr('data-start_date').indexOf(t) != -1) {
                 $(a).removeClass("d-none");
@@ -188,8 +189,10 @@ $(function () {
             }
         })
     }
+    
     const getConf = () => {
         $.ajax({
+            // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10&filter[skip]=0',
             url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]',
             type: 'get',
             success: (result) => {
@@ -198,6 +201,8 @@ $(function () {
                 $.each(confs, function (i, conf) {
                     addConf(conf);
                 });
+                localStorage.setItem('conf', JSON.stringify(confs));
+                localStorage.setItem('version', JSON.stringify(curVersion));
             },
             error: function () {
                 console.log("error load confs");
@@ -205,10 +210,9 @@ $(function () {
             }
         });
     }
-    getConf();
 
     const login = (data) => {
-        console.log(data);
+        // console.log('no local token');
         $.ajax({
             url: 'http://do1.bilabila.tk:3000/api/users/login',
             type: 'post',
@@ -216,7 +220,12 @@ $(function () {
             datatype: 'json',
             success: (res) => {
                 user = res;
-                $myConfs.html('');
+                console.log(res);
+                // data['access_token'] = user['id'];
+                // data['user_id'] = user['userId'];
+                localStorage.setItem('user', JSON.stringify(user));
+                // localStorage.setItem('userInfo', JSON.stringify(user));
+                
                 getUser();
             },
             error: (res) => {
@@ -225,6 +234,26 @@ $(function () {
             }
         });
     }
+    let userString = localStorage.getItem('user');
+    if (userString != null) {
+        user = JSON.parse(userString);
+        getUser(user);
+    }
+    let confString = localStorage.getItem('conf');
+    let cachedVersion = localStorage.getItem('version');
+    const curVersion = $('#version').data('version');
+    if (confString != null && cachedVersion==curVersion) {
+        removeConf();
+        let confs = JSON.parse(confString);
+        $.each(confs, function (i, conf) {
+            addConf(conf);
+        });
+        console.log('use cached confs')
+    } else {
+        console.log('get remote confs')
+        getConf();
+    }
+
 
     const myAlert = (alert) => {
         alert.delay(100).fadeIn(300).delay(3000).fadeOut(300);
@@ -346,7 +375,7 @@ $(function () {
             searchMyConf($(this).val());
         else
             $(this).data('timer', setTimeout(() => {
-                searchMyConf($searchInput.val());
+                searchMyConf($mySearchInput.val());
             }, 200));
     });
 
@@ -519,6 +548,10 @@ ${conf['remark']}`,
             });
         }
     });
+
+    //modal
+    
+
 
     //back to top
     var $backToTop = $('#back-to-top');

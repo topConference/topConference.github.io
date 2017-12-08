@@ -1,10 +1,33 @@
-body{
-  font-family: sans-serif;
-  /* font-size: 10; */
+/* .modal {
+ overflow-y: auto;
 }
-.cal-alert{
-  top:0;
+
+.modal-open {
+ overflow: auto;
+} */
+
+.vertical-align {
+    display: flex;
+    align-items: center;
 }
+
+.conf .img {
+    padding: .1em;
+    margin: 0;
+    /* vertical-align:middle; */
+    max-height: 100px;
+    /* width:114px; */
+}
+
+body {
+    font-family: sans-serif;
+    /* font-size: 10; */
+}
+
+.cal-alert {
+    top: 0;
+}
+
 .back-to-top {
     display: none;
     position: fixed;
@@ -16,67 +39,69 @@ body{
     z-index: 10;
     color: #999
 }
-#rightDiv {
-    position: fixed;
-    right: 30;
-    	height:100%;
 
-}
-
-.conf .delete{
-  position: absolute;
-  bottom: 0.3em;
-  right: 0.5em;
-  color: dodgerblue;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
+.conf .delete {
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.5em;
+    color: dodgerblue;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
 }
 
 .conf {
-  margin: 0.1em; 
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.12);
-  position : relative;
-}
-.conf .add{
-  position: absolute;
-  bottom: 0.3em;
-  right: 0.5em;
-  color: dodgerblue;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
-}
-.conf .add-cal{
-  right: 1.5em;
-  color: forestgreen;
-}
-.conf .add:hover{
-  color: #80DEEA
-}
-.conf .address:hover{
-  color: cornflowerblue
-}
-.conf .date{
-  color: lightseagreen
+    margin: 0.1em;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.12);
+    position: relative;
 }
 
-.conf .topic{
-  font-size: 1.2em;
-  color:#3EA6CE
+.conf .add {
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.5em;
+    color: dodgerblue;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);
 }
-.conf .address{
-  color: #999
+
+.conf .add-cal {
+    right: 1.5em;
+    color: forestgreen;
 }
-.conf .deadline{
-  font-size:1em;
-  color: #607D8B
+
+.conf .add:hover {
+    color: #80DEEA
 }
-nav{
-  box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.12);
+
+.conf .address:hover {
+    color: cornflowerblue
+}
+
+.conf .date {
+    color: lightseagreen
+}
+
+.conf .topic {
+    font-size: 1.2em;
+    color: #3EA6CE
+}
+
+.conf .address {
+    color: #999
+}
+
+.conf .deadline {
+    font-size: 1em;
+    color: #607D8B
+}
+
+nav {
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.12);
 }
 
 .alert {
     bottom: 0;
     right: 4%;
     display: none;
-    position:fixed;
+    position: fixed;
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -88,28 +113,60 @@ nav{
 }
 
 #mainDiv {
-  padding-top: 5rem;
+    padding-top: 5rem;
 }
 
 @media (min-width: 1200px) {
-  .container {
-    width: 1100px;
-  }
+    .container {
+        width: 1100px;
+    }
 }
 
-  /* Always set the map height explicitly to define the size of the div
+
+/* Always set the map height explicitly to define the size of the div
    * element that contains the map. */
-   /* #mapDiv {
+
+
+/* #mapDiv {
      position: absolute;
      top: 0;
      left: 0
    } */
-  #map {
-	height: 40%;
-	width: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-  /* #floating-panel {
+
+.scrollable {
+    height: 40%;
+    /* or any value */
+    overflow-y: auto;
+}
+
+#rightDiv {
+    position: fixed;
+    right: 30;
+    height: 100%;
+    /* padding-bottom: 10;
+    margin-bottom: 10; */
+    /* max-height: 100%; */
+}
+
+
+/* #myConfs {
+    height: 50%;
+} */
+
+#map {
+    /* position: absolute; */
+    /* top: 0; */
+    /* max-height: 100%; */
+    /* margin-bottom: 10%; */
+    height: 45%;
+    width: 100%;
+}
+
+
+/* Optional: Makes the sample page fill the window. */
+
+
+/* #floating-panel {
 	position: absolute;
 	top: 10px;
 	left: 25%;
@@ -122,6 +179,3 @@ nav{
 	line-height: 30px;
   padding-left: 10px; 
 } */
-
-
-
