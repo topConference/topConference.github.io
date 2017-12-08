@@ -64,6 +64,8 @@ const handleClientLoad = () => {
     gapi.load('client:auth2', initClient);
 }
 
+//disable scrollbar
+// $("body").css("overflow", "auto");
 //on ready
 $(function () {
     
@@ -373,7 +375,7 @@ $(function () {
             searchMyConf($(this).val());
         else
             $(this).data('timer', setTimeout(() => {
-                searchMyConf($searchInput.val());
+                searchMyConf($mySearchInput.val());
             }, 200));
     });
 
@@ -546,6 +548,10 @@ ${conf['remark']}`,
             });
         }
     });
+
+    //modal
+    
+
 
     //back to top
     var $backToTop = $('#back-to-top');
