@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+  <!-- <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
     <a class="navbar-brand" href="">topConference</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -53,12 +53,59 @@
         </li>
       </ul>
     </div>
-  </nav>
-
+  </nav> -->
+  <div class="container-fluid fixed-top bg-light" id="navContainer">
+    <div class="d-flex justify-content-start navbar-expand-lg navbar-light bg-light text-center p-2">
+      <a class="d-flex navbar-brand text-dark" href="">&ensp;topConference</a>
+      <input class="d-flex form-control w-25 ml-5" placeholder="search ..." aria-label="search ..." id="searchInput">
+      <!-- <div class="btn-group">
+        <button class="btn btn-light text-primary  fa fa-book" type="button" data-toggle="collapse" data-target="#collapseAddBook"
+          aria-expanded="false" aria-controls="collapseAddBook"></button>
+        <button class="btn btn-light text-success fa fa-user-circle-o h-100" type="button" data-toggle="collapse" data-target="#collapseAddAuthor"
+          aria-expanded="false" aria-controls="collapseAddAuthor"></button>
+      </div> -->
+    </div>
+  </div>
+  <!-- mainDiv -->
   <div class="container" id="mainDiv">
     <div class="row">
       <div class="col-lg-8" id="leftDiv">
-        <div class="card card-default">
+        <div id="confs">
+          <template id="confTemplate">
+            <div class="conference conf row my-3" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}"
+              data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}" >
+              <div class="col col-3 vertical-align">
+                <img src="{{img}}" alt="..." class="">
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col">
+                    <a href="{{url}}" target="_blank" class="topic text-primary mt-2">{{topic}}</a>
+                  </div>
+                </div>
+                <div class="row nopadding">
+                  <div class="col-5">
+                    <p class="date  ">{{start_date}} - {{end_date}}</p>
+                  </div>
+                  <div class="col-4">
+                    <p class="address  text-truncate">{{address}}</p>
+                  </div>
+                  <div class="col-3">
+                    <p class="deadline ">{{deadline}}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="deadline col col-2 vertical-align" data-toggle="modal" data-target="#confModal">{{deadline}}</div> -->
+              <div class="d-none trigger" data-toggle="modal" data-target="#confModal">
+              </div>
+            </div>
+            <!-- <i class="add add-cal fa fa-calendar-plus-o fa-2x d-none"></i>
+            <i class="add fa fa-plus-circle fa-2x d-none"></i> -->
+          </template>
+        </div>
+
+
+        <!-- <div class="card card-default">
           <div class="card-header">
             <div class="row px-2">
               <input class="form-control w-25" placeholder="search..." aria-label="search..." id="searchInput">
@@ -79,30 +126,27 @@
 
             <template id="confTemplate">
               <div class="conference conf row" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}"
-                data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}"
-                data-toggle="modal" data-target="#confModal">
+                data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}">
                 <div class="col col-3 vertical-align">
                   <img src="{{img}}" alt="..." class="">
                 </div>
-                <!-- <img src="{{img}}" alt="..." class="img col col-3 vertical-align"> -->
                 <div class="col">
                   <div class="row">
                     <a href="{{url}}" target="_blank" class="col topic text-primary mt-2">{{topic}}</a>
                   </div>
                   <div class="row mt-2">
                     <p class="date col">{{start_date}} - {{end_date}}</p>
-                    <p class="address col">{{address}}</p>
+                    <p class="address col text-truncate">{{address}}</p>
                   </div>
                 </div>
-                <div class="deadline col col-2 vertical-align">{{deadline}}</div>
-
+                <div class="deadline col col-2 vertical-align"data-toggle="modal" data-target="#confModal">{{deadline}}</div>
               </div>
               <i class="add add-cal fa fa-calendar-plus-o fa-2x d-none"></i>
               <i class="add fa fa-plus-circle fa-2x d-none"></i>
             </template>
-      
+
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- my conference -->
@@ -115,14 +159,14 @@
             </div>
           </div>
 
-          <div class="card-body nopadding scrollable" id="myConfs">
+          <div class="card-body scrollable" id="myConfs">
             <template id="myConfTemplate">
               <div class="conference conf myConf row p-2" data-topic="{{topic}}" data-deadline="{{deadline}}" data-url="{{url}}" data-address="{{address}}"
                 data-img="{{img}}" data-h5index="{{h5index}}" data-start_date="{{start_date}}" data-end_date="{{end_date}}"
                 data-remark="{{remark}}" data-toggle="modal" data-target="#confModal">
                 <div class="col-8 text-info text-truncate nopadding topic">{{topic}}</div>
                 <!-- <div class="col ml-auto text-truncate">{{start_date} {{end-data}}</div> -->
-                <div class="col text-truncate nopadding address address">{{address}}</div>
+                <div class="col text-truncate nopadding address ">{{address}}</div>
                 <!-- <i class="delete fa fa-plus-circle fa-2x"></i> -->
               </div>
             </template>
@@ -158,7 +202,7 @@
             </form>
           </div>
           <!-- cardbody -->
-          
+
           <div class="map" id="mapDiv">
             <!-- <div id="floating-panel" hidden>
               <input id="address" type="textbox" hidden>
