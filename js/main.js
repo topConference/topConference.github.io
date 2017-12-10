@@ -68,7 +68,8 @@ const handleClientLoad = () => {
 // $("body").css("overflow", "auto");
 //on ready
 $(function () {
-    
+    const today = new Date();
+    // const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     handleClientLoad();
     initMap();
     const $confModal = $('#confModal');
@@ -86,13 +87,14 @@ $(function () {
     const $myConfs = $('#myConfs');
     const myConfTemplate = $('#myConfTemplate').html();
     const $mySearchInput = $('#mySearchInput');
-    const $logInBtn =  $('#logInBtn');
+    const $logInBtn = $('#logInBtn');
     const $logInForm = $('#logInForm');
     const $signUpForm = $('#signUpForm');
     const $addBtn = $('#addBtn');
     const $addCalBtn = $('#addCalBtn');
     const $delBtn = $('#delBtn');
     const $updateBtn = $('#updateBtn');
+    const $logOutBtn = $('#logOutBtn');
     //google-map
 
     const geocodeAddress = (geocoder, resultsMap, address) => {
@@ -120,6 +122,20 @@ $(function () {
         geocodeAddress(geocoder, map, address);
     });
     const myAddConf = (conf) => {
+        let deadline = conf['deadline'];
+        let start_date = conf['start_date'];
+        let end_date = conf['end_date'];
+        let d = new Date(deadline.slice(0, 4), deadline.slice(4, 6) - 1, deadline.slice(6));
+        let s = new Date(start_date.slice(0, 4), start_date.slice(4, 6) - 1, start_date.slice(6));
+        let e = new Date(end_date.slice(0, 4), end_date.slice(4, 6) - 1, end_date.slice(6));
+        let delta1 = Math.ceil((d.getTime() - today.getTime()) / (1000 * 3600 * 24));
+        let delta2 = Math.ceil((s.getTime() - today.getTime()) / (1000 * 3600 * 24));
+        let delta3 = Math.ceil((e.getTime() - today.getTime()) / (1000 * 3600 * 24));
+        conf['deadline2'] = undefined;
+        if (delta1 > 0 && delta1 < 30) {
+            conf['deadline2'] = delta1 + " days left for submission";
+        }else if (delta2>0 && delta2<30)
+            conf['deadline2'] = delta2 + " days left for open"; 
         $myConfs.append(Mustache.render(myConfTemplate, conf));
     }
     const getUser = () => {
@@ -132,6 +148,7 @@ $(function () {
                 if (!("conferences" in userInfo)) {
                     //add
                 } else {
+                    $logOutBtn.removeClass('d-none');
                     $.each(r.conferences, (i, conf) => {
                         // console.log(conf);
                         myAddConf(conf);
@@ -147,20 +164,25 @@ $(function () {
     const removeConf = () => {
         $confs.html('');
     }
-
+    
     const addConf = (conf) => {
+        // conf['display'] = undefined;
+        // num++;
+        // if (num > limit) {
+        //     conf['display'] = 'd-none';
+        // }
         $confs.append(Mustache.render(confTemplate, conf));
     }
 
     const searchMyConf = (input) => {
-        let t = input.trim();
+        let t = input.trim().toLowerCase();
         $('#rightDiv .conf').each((i, a) => {
             if (
                 $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
                 $(a).attr('data-deadline').indexOf(t) != -1 ||
                 // $(a).attr('data-url').indexOf(t) != -1 ||
                 $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
-                // $(a).attr('data-img').indexOf(t) != -1 ||
+                $(a).attr('data-img').toLowerCase().indexOf(t) != -1 ||
                 // $(a).attr('data-h5index').indexOf(t) != -1 ||
                 $(a).attr('data-end_date').indexOf(t) != -1 ||
                 $(a).attr('data-start_date').indexOf(t) != -1) {
@@ -172,14 +194,15 @@ $(function () {
     }
     const searchConf = (input) => {
         // console.log("sea");
-        let t = input.trim();
+        $('body,html').scrollTop(0);
+        let t = input.trim().toLowerCase();
         $('#leftDiv .conf').each((i, a) => {
             if (
                 $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
                 $(a).attr('data-deadline').indexOf(t) != -1 ||
                 // $(a).attr('data-url').indexOf(t) != -1 ||
                 $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
-                // $(a).attr('data-img').indexOf(t) != -1 ||
+                $(a).attr('data-img').toLowerCase().indexOf(t) != -1 ||
                 // $(a).attr('data-h5index').indexOf(t) != -1 ||
                 $(a).attr('data-end_date').indexOf(t) != -1 ||
                 $(a).attr('data-start_date').indexOf(t) != -1) {
@@ -189,11 +212,11 @@ $(function () {
             }
         })
     }
-    
+
     const getConf = () => {
         $.ajax({
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10&filter[skip]=0',
-            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]',
+            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[fields][top_info]&filter[order]=deadline%20ASC',
             type: 'get',
             success: (result) => {
                 removeConf();
@@ -238,11 +261,13 @@ $(function () {
     if (userString != null) {
         user = JSON.parse(userString);
         getUser(user);
+    } else {
+        $logInForm.removeClass('d-none');
     }
     let confString = localStorage.getItem('conf');
     let cachedVersion = localStorage.getItem('version');
     const curVersion = $('#version').data('version');
-    if (confString != null && cachedVersion==curVersion) {
+    if (confString != null && cachedVersion == curVersion) {
         removeConf();
         let confs = JSON.parse(confString);
         $.each(confs, function (i, conf) {
@@ -347,7 +372,7 @@ $(function () {
         $confModal.find('h5.modal-title').html(data['topic']);
     }
     // todo add to cal
-    const addToCal = (data) => {}
+    const addToCal = (data) => { }
     //search in my conferences
     //to do show and hide add button
     // $confs.on('mouseenter', '.conf', () => {
@@ -360,7 +385,7 @@ $(function () {
     // });
 
     //search in all conferences
-    $searchInput.on("keyup", function (e) {
+    $searchInput.on("keyup",  (e)=> {
         clearTimeout($.data(this, 'timer'));
         if (e.keyCode === 13)
             searchConf($(this).val());
@@ -369,6 +394,7 @@ $(function () {
                 searchConf($searchInput.val());
             }, 200));
     });
+
     $mySearchInput.on("keyup", function (e) {
         clearTimeout($.data(this, 'timer'));
         if (e.keyCode === 13)
@@ -400,9 +426,16 @@ $(function () {
         };
         return data;
     }
-    $confModal.on('show.bs.modal', function (e) {
+    $confModal.on('show.bs.modal', (e) => {
+        //judge if link clicked
+        // console.log(e);
+        // console.log(e.relatedTarget);
+        // console.log(e.target);
         //remove all btn
-        $(this).find('button').addClass('d-none');
+        // console.log($(this));
+        // $(this).find('button').addClass('d-none');
+        $delBtn.addClass('d-none');
+        $updateBtn.addClass('d-none');
         $addCalBtn.removeClass('d-none');
         $addBtn.removeClass('d-none');
 
@@ -437,7 +470,7 @@ $(function () {
     const findAndRemove = (array, property, value) => {
         console.log(array, property, value);
         array.forEach(function (result, index) {
-            if (result[property] === value) {
+            if (result[property] == value) {
                 array.splice(index, 1);
             }
         });
@@ -445,13 +478,15 @@ $(function () {
     const findAndUpdate = (array, property, value, data) => {
         console.log(array, property, value);
         array.forEach(function (result, index) {
-            if (result[property] === value) {
+            if (result[property] == value) {
                 array.splice(index, 1, data);
             }
         });
     }
-    $confModal.delegate('.delete', 'click', function () {
+    $confModal.delegate('.delete', 'click', () =>{
         findAndRemove(userInfo['conferences'], 'topic', $target.data('topic'));
+        console.log(userInfo['conferences']);
+        console.log($target.data('topic'));
         patchConf().done(() => {
             $target.addClass('d-none');
             $infoAlert.text('del success');
@@ -524,18 +559,18 @@ ${conf['remark']}`,
                 //         'email': 'sbrin@example.com'
                 //     }
                 // ],
-                // 'reminders': {
-                //     'useDefault': false,
-                //     'overrides': [{
-                //             'method': 'email',
-                //             'minutes': 24 * 60
-                //         },
-                //         {
-                //             'method': 'popup',
-                //             'minutes': 10
-                //         }
-                //     ]
-                // }
+                'reminders': {
+                    'useDefault': false,
+                    'overrides': [{
+                            'method': 'email',
+                            'minutes': 24 * 60
+                        },
+                        {
+                            'method': 'popup',
+                            'minutes': 10
+                        }
+                    ]
+                }
             };
             console.log(event);
             let request = gapi.client.calendar.events.insert({
@@ -550,19 +585,40 @@ ${conf['remark']}`,
     });
 
     //modal
-    
-
+    $('#confs').on('click', (e) => {
+        let target = $(e.target);
+        if (target.is('a') || target.hasClass('trigger')) return;
+        if (target.hasClass('address')) {
+            $searchInput.val(target.html());
+            searchConf(target.html());
+        } else if (target.is('img')) {
+            let t = target.attr('src');
+            let p = t.split(/[\/._]/);
+            t = p[p.length - 3];
+            $searchInput.val(t);
+            searchConf(t);
+        } else
+            target.closest('.conference').find('.trigger').trigger('click');
+    });
+    //signout
+    $logOutBtn.on('click', () => {
+        localStorage.removeItem('user'); 
+        window.location.reload();
+    });
+        
 
     //back to top
     var $backToTop = $('#back-to-top');
-    $(window).scroll(function () {
-        if ($(window).scrollTop() > 100) {
-            $backToTop.fadeIn(1000);
+    $(window).scroll(() => {
+        if ($(window).scrollTop() > 1000) {
+            $backToTop.fadeIn(500);
         } else {
-            $backToTop.fadeOut(1000);
+            $backToTop.removeClass('d-none');
+            $backToTop.fadeOut(500);
         }
     });
-    $backToTop.click(function () {
+
+    $backToTop.click(() => {
         $('body,html').animate({
             scrollTop: 0
         });
