@@ -76,6 +76,7 @@ $(function () {
     let $target;
     let user = {};
     let userInfo = {};
+    const $noConf = $('#noConf');
     const $primaryAlert = $('#primaryAlert');
     const $dangerAlert = $('#dangerAlert');
     const $infoAlert = $('#infoAlert');
@@ -122,6 +123,7 @@ $(function () {
         geocodeAddress(geocoder, map, address);
     });
     const myAddConf = (conf) => {
+        $noConf.addClass('d-none');
         let deadline = conf['deadline'];
         let start_date = conf['start_date'];
         let end_date = conf['end_date'];
@@ -134,8 +136,8 @@ $(function () {
         conf['deadline2'] = undefined;
         if (delta1 > 0 && delta1 < 30) {
             conf['deadline2'] = delta1 + " days left for submission";
-        }else if (delta2>0 && delta2<30)
-            conf['deadline2'] = delta2 + " days left for open"; 
+        } else if (delta2 > 0 && delta2 < 30)
+            conf['deadline2'] = delta2 + " days left for open";
         $myConfs.append(Mustache.render(myConfTemplate, conf));
     }
     const getUser = () => {
@@ -143,14 +145,14 @@ $(function () {
             url: `http://do1.bilabila.tk:3000/api/users/${user.userId}?access_token=${user.id}`,
             type: 'get',
             success: (r) => {
-                $myConfs.html('');
                 userInfo = r;
-				$logOutBtn.removeClass('d-none');
-                if (!("conferences" in userInfo)) {
-                    //add
+                $logOutBtn.removeClass('d-none');
+                $logInForm.addClass('d-none');
+                if (userInfo['conferences'] === undefined || userInfo['conferences'].length === 0) {
+                    $noConf.removeClass('d-none');
                 } else {
                     $.each(r.conferences, (i, conf) => {
-                        // console.log(conf);
+                        console.log(conf);
                         myAddConf(conf);
                     });
                 }
@@ -164,13 +166,8 @@ $(function () {
     const removeConf = () => {
         $confs.html('');
     }
-    
+
     const addConf = (conf) => {
-        // conf['display'] = undefined;
-        // num++;
-        // if (num > limit) {
-        //     conf['display'] = 'd-none';
-        // }
         $confs.append(Mustache.render(confTemplate, conf));
     }
 
@@ -216,7 +213,8 @@ $(function () {
     const getConf = () => {
         $.ajax({
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10&filter[skip]=0',
-            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[fields][top_info]&filter[order]=deadline%20ASC',
+            // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=topic&filter[fields][info]&filter[fields][top_info]',
+            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=deadline&filter[fields][info]&filter[fields][top_info]',
             type: 'get',
             success: (result) => {
                 removeConf();
@@ -235,7 +233,6 @@ $(function () {
     }
 
     const login = (data) => {
-        // console.log('no local token');
         $.ajax({
             url: 'http://do1.bilabila.tk:3000/api/users/login',
             type: 'post',
@@ -244,11 +241,7 @@ $(function () {
             success: (res) => {
                 user = res;
                 console.log(res);
-                // data['access_token'] = user['id'];
-                // data['user_id'] = user['userId'];
                 localStorage.setItem('user', JSON.stringify(user));
-                // localStorage.setItem('userInfo', JSON.stringify(user));
-                
                 getUser();
             },
             error: (res) => {
@@ -267,6 +260,7 @@ $(function () {
     let confString = localStorage.getItem('conf');
     let cachedVersion = localStorage.getItem('version');
     const curVersion = $('#version').data('version');
+    // cachedVersion = 0;
     if (confString != null && cachedVersion == curVersion) {
         removeConf();
         let confs = JSON.parse(confString);
@@ -295,8 +289,14 @@ $(function () {
 
     //add to my conferences
     const addToConf = (data) => {
+        if (data === undefined) {
+            data = {};
+        }
         if (!('conferences' in userInfo)) {
             userInfo['conferences'] = [];
+        }
+        if (!data['topic']) {
+            data['topic'] = "my conference";
         }
         userInfo.conferences.push(data);
         //to do may be need to delete some key;
@@ -321,7 +321,16 @@ $(function () {
     //log in  & sign up
     $logInForm.on('submit', (e) => {
         e.preventDefault();
-        if ($logInBtn.html().indexOf("sign up") != -1) {
+        if ($logInBtn.html().indexOf("sign up") != -1 && $(this).find('.email').val().length === 0) {
+            $dangerAlert.text('email is required');
+            myAlert($dangerAlert);
+        } else if ($(this).find('.username').val().length === 0) {
+            $dangerAlert.text('username is required');
+            myAlert($dangerAlert);
+        } else if ($(this).find('.password').val().length === 0) {
+            $dangerAlert.text('password is required');
+            myAlert($dangerAlert);
+        } else if ($logInBtn.html().indexOf("sign up") != -1) {
             let data = {
                 'email': $(this).find('.email').val(),
                 'username': $(this).find('.username').val(),
@@ -373,22 +382,14 @@ $(function () {
     }
     // todo add to cal
     const addToCal = (data) => { }
-    //search in my conferences
-    //to do show and hide add button
-    // $confs.on('mouseenter', '.conf', () => {
-    //     console.log('a');
-    //     $(this).find('.add').removeClass('d-none');
-    // });
-    // $confs.on('mouseleave', '.conf',() => {
-    //     console.log($(this));
-    //     $(this).find('.add').addClass('d-none');
-    // });
 
     //search in all conferences
-    $searchInput.on("keyup",  (e)=> {
+    $searchInput.on("keyup", (e) => {
         clearTimeout($.data(this, 'timer'));
-        if (e.keyCode === 13)
-            searchConf($(this).val());
+
+        if (e.keyCode === 13) {
+            searchConf($searchInput.val());
+        }
         else
             $(this).data('timer', setTimeout(() => {
                 searchConf($searchInput.val());
@@ -427,25 +428,16 @@ $(function () {
         return data;
     }
     $confModal.on('show.bs.modal', (e) => {
-        //judge if link clicked
-        // console.log(e);
-        // console.log(e.relatedTarget);
-        // console.log(e.target);
-        //remove all btn
-        // console.log($(this));
-        // $(this).find('button').addClass('d-none');
         $delBtn.addClass('d-none');
         $updateBtn.addClass('d-none');
         $addCalBtn.removeClass('d-none');
         $addBtn.removeClass('d-none');
-
         $target = $(e.relatedTarget.closest('.conference'));
-        // console.log();
-        if ('href' in $(e.relatedTarget).attr) {
-            e.preventDefault();
-            //todo not work
-        } else if ($(e.relatedTarget).attr('id') === "addMyConfBtn") {
+        if ($(e.relatedTarget).attr('id') === "addMyConfBtn") {
             clearModalData();
+            if ($.isEmptyObject(userInfo)) {
+                $addBtn.addClass('d-none');
+            }
         } else {
             $confModal.find('input.topic').val($target.data('topic'));
             $confModal.find('input.address').val($target.data('address'));
@@ -475,6 +467,7 @@ $(function () {
             }
         });
     }
+
     const findAndUpdate = (array, property, value, data) => {
         console.log(array, property, value);
         array.forEach(function (result, index) {
@@ -483,12 +476,14 @@ $(function () {
             }
         });
     }
-    $confModal.delegate('.delete', 'click', () =>{
+    $confModal.delegate('.delete', 'click', () => {
         findAndRemove(userInfo['conferences'], 'topic', $target.data('topic'));
         console.log(userInfo['conferences']);
         console.log($target.data('topic'));
         patchConf().done(() => {
             $target.addClass('d-none');
+            if (userInfo['conferences'] === undefined || userInfo['conferences'].length === 0)
+                $noConf.removeClass('d-none');
             $infoAlert.text('del success');
             myAlert($infoAlert);
         }).fail(() => {
@@ -562,13 +557,13 @@ ${conf['remark']}`,
                 'reminders': {
                     'useDefault': false,
                     'overrides': [{
-                            'method': 'email',
-                            'minutes': 24 * 60
-                        },
-                        {
-                            'method': 'popup',
-                            'minutes': 10
-                        }
+                        'method': 'email',
+                        'minutes': 24 * 60
+                    },
+                    {
+                        'method': 'popup',
+                        'minutes': 10
+                    }
                     ]
                 }
             };
@@ -602,10 +597,10 @@ ${conf['remark']}`,
     });
     //signout
     $logOutBtn.on('click', () => {
-        localStorage.removeItem('user'); 
+        localStorage.removeItem('user');
         window.location.reload();
     });
-        
+
 
     //back to top
     var $backToTop = $('#back-to-top');

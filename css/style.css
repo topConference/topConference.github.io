@@ -74,6 +74,9 @@ body {
 .conf .address:hover {
     color: cornflowerblue
 }
+.conf .addressp:hover {
+    color: cornflowerblue
+}
 
 .conf .date {
     color: lightseagreen
@@ -85,6 +88,9 @@ body {
 }
 
 .conf .address {
+    color: #999
+}
+.conf .addressp {
     color: #999
 }
 
@@ -135,7 +141,7 @@ body {
 }
 
 #mainDiv {
-    padding-top: 4rem;
+    padding-top: 2rem;
 }
 
 @media (min-width: 1200px) {
@@ -180,24 +186,6 @@ body {
     /* top: 0; */
     /* max-height: 100%; */
     /* margin-bottom: 10%; */
-    height: 45%;
+    height: 40%;
     width: 100%;
 }
-
-
-/* Optional: Makes the sample page fill the window. */
-
-
-/* #floating-panel {
-	position: absolute;
-	top: 10px;
-	left: 25%;
-	z-index: 5;
-	background-color: #fff;
-	padding: 5px;
-	border: 1px solid #999;
-	text-align: center;
-	font-family: 'Roboto','sans-serif';
-	line-height: 30px;
-  padding-left: 10px; 
-} */
