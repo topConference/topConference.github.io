@@ -1,6 +1,6 @@
 ﻿<html>
 <head>
-  <meta id='version' data-version="20171205001">
+  <meta id='version' data-version="20171213">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <meta name="google-signin-client_id" content="990871840937-btpurlb8hetgq2fpno01rg7l86d0ln4j.apps.googleusercontent.com"> -->
@@ -12,7 +12,7 @@
 
   <link href="css/style.css" rel="stylesheet">
 </head>
-
+123
 <body>
   <div class="container-fluid fixed-top bg-light" id="navContainer">
     <div class="d-flex justify-content-start navbar-expand-lg navbar-light bg-light text-center p-2">
@@ -37,15 +37,16 @@
                     <a href="{{url}}" target="_blank" class="topic text-primary mt-2">{{topic}}</a>
                   </div>
                 </div>
-                <div class="row nopadding">
+                <div class="row nopadding my-2">
                   <div class="col col-md-5 d-none d-md-block">
-                    <p class="date  ">{{start_date}} - {{end_date}}</p>
+                    <text class="date">{{start_date}} - {{end_date}}</text>
                   </div>
                   <div class="col col-md-4">
-                    <p class="address  text-truncate">{{address}}</p>
+                    <div class=" text-truncate addressp" ><text class="address">{{address}}</text></div>
+                    <!-- <div class=" text-truncate address">{{address}}</div> -->
                   </div>
                   <div class="col col-md-3">
-                    <p class="deadline ">{{deadline}}</p>
+                    <text class="deadline ">{{deadline}}</text>
                   </div>
                 </div>
               </div>
@@ -79,6 +80,11 @@
                 <!-- <i class="delete fa fa-plus-circle fa-2x"></i> -->
               </div>
             </template>
+
+            <div id="noConf" class="vertical-align d-none">
+              <h1 class="text-secondary mx-auto mt-5">no conferences</h1>
+            </div>
+
             <form class="px-3 pt-4 d-none" id="logInForm">
               <div class="collapse" id="emailCollapse">
                 <div class="input-group">
@@ -199,8 +205,10 @@
   <script src="js/bootstrap.min.js"></script>
   <!-- Compiled and minified JavaScript -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk"></script>
-  <script src="https://apis.google.com/js/api.js"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk"></script> -->
+  <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+  <script src="js/map.js"></script>
+  <script src="js/cal.js"></script>
   <script src="js/main.js"></script>
   <!-- use onload is really slow -->
   <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPwfIMmm-KURsXOU6EaS6RN04c7mLNDNk&callback=initMap"></script>
