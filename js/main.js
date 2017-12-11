@@ -145,10 +145,10 @@ $(function () {
             success: (r) => {
                 $myConfs.html('');
                 userInfo = r;
+				$logOutBtn.removeClass('d-none');
                 if (!("conferences" in userInfo)) {
                     //add
                 } else {
-                    $logOutBtn.removeClass('d-none');
                     $.each(r.conferences, (i, conf) => {
                         // console.log(conf);
                         myAddConf(conf);
