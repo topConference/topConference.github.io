@@ -74,6 +74,7 @@ body {
 .conf .address:hover {
     color: cornflowerblue
 }
+
 .conf .addressp:hover {
     color: cornflowerblue
 }
@@ -90,6 +91,7 @@ body {
 .conf .address {
     color: #999
 }
+
 .conf .addressp {
     color: #999
 }
@@ -98,6 +100,7 @@ body {
     font-size: 1em;
     color: #607D8B
 }
+
 .conf .deadline2 {
     font-size: 1em;
     color: crimson;
@@ -136,12 +139,8 @@ body {
     /*margin: 0 !important;*/
 }
 
-#rightDiv {
-    padding-top: 1rem;
-}
-
 #mainDiv {
-    padding-top: 2rem;
+    padding-top: 4rem;
 }
 
 @media (min-width: 1200px) {
@@ -167,10 +166,22 @@ body {
     overflow-y: auto;
 }
 
+
+
+#mainDiv {
+    /* position: relative; */
+}
+
 #rightDiv {
     position: fixed;
-    right: 30;
-    height: 100%;
+    /* padding-top: 1rem; */
+    /* top: 1rem; */
+    top:5rem;
+    right: 1rem;
+    /* min-height: 1s000px; */
+    /* min-width: 1000px; */
+    height: 90%;
+    /* margin-bottom: 0; */
     /* padding-bottom: 10;
     margin-bottom: 10; */
     /* max-height: 100%; */
@@ -182,10 +193,11 @@ body {
 } */
 
 #map {
-    /* position: absolute; */
-    /* top: 0; */
+    /* position: fixed; */
+    margin-top: 0.5rem;
+    /* bottom: 0rem; */
     /* max-height: 100%; */
     /* margin-bottom: 10%; */
-    height: 40%;
+    height: 45%;
     width: 100%;
 }

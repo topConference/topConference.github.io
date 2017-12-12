@@ -69,6 +69,7 @@ const handleClientLoad = () => {
 //on ready
 $(function () {
     const today = new Date();
+    const showLimit = 50;
     // const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     handleClientLoad();
     initMap();
@@ -97,6 +98,7 @@ $(function () {
     const $delBtn = $('#delBtn');
     const $updateBtn = $('#updateBtn');
     const $logOutBtn = $('#logOutBtn');
+    const $leftDivEnd = $('#leftDivEnd');
     //google-map
 
     const geocodeAddress = (geocoder, resultsMap, address) => {
@@ -167,10 +169,20 @@ $(function () {
     const removeConf = () => {
         $confs.html('');
     }
-
-    const addConf = (conf) => {
-        if (conf['deadline'] > deadlineLimit)
+    let firstShow = 0;
+    let firstShowFlag = true;
+    const addConf = (i, conf) => {
+        conf['display'] = undefined;
+        if (conf['deadline'] > deadlineLimit) {
+            if (firstShowFlag) {
+                firstShowFlag = false;
+                firstShow = i;
+            }
+            if (i - firstShow > showLimit) {
+                conf['display'] = 'd-none'
+            }
             $confs.append(Mustache.render(confTemplate, conf));
+        }
     }
 
     const searchMyConf = (input) => {
@@ -195,21 +207,30 @@ $(function () {
         // console.log("sea");
         $('body,html').scrollTop(0);
         let t = input.trim().toLowerCase();
-        $('#leftDiv .conf').each((i, a) => {
-            if (
-                $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
-                $(a).attr('data-deadline').indexOf(t) != -1 ||
-                // $(a).attr('data-url').indexOf(t) != -1 ||
-                $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
-                $(a).attr('data-img').toLowerCase().indexOf(t) != -1 ||
-                // $(a).attr('data-h5index').indexOf(t) != -1 ||
-                $(a).attr('data-end_date').indexOf(t) != -1 ||
-                $(a).attr('data-start_date').indexOf(t) != -1) {
-                $(a).removeClass("d-none");
-            } else {
-                $(a).addClass("d-none");
-            }
-        })
+        if (t === '') {
+            $('#leftDiv .conf').each((i, a) => {
+                if (i <= showLimit){
+                    $(a).removeClass("d-none");
+                } else {
+                    $(a).addClass("d-none");
+                }
+            });
+        } else
+            $('#leftDiv .conf').each((i, a) => {
+                if (
+                    $(a).attr('data-topic').toLowerCase().indexOf(t) != -1 ||
+                    $(a).attr('data-deadline').indexOf(t) != -1 ||
+                    // $(a).attr('data-url').indexOf(t) != -1 ||
+                    $(a).attr('data-address').toLowerCase().indexOf(t) != -1 ||
+                    $(a).attr('data-img').toLowerCase().indexOf(t) != -1 ||
+                    // $(a).attr('data-h5index').indexOf(t) != -1 ||
+                    $(a).attr('data-end_date').indexOf(t) != -1 ||
+                    $(a).attr('data-start_date').indexOf(t) != -1) {
+                    $(a).removeClass("d-none");
+                } else {
+                    $(a).addClass("d-none");
+                }
+            });
     }
 
     const getConf = () => {
@@ -221,8 +242,8 @@ $(function () {
             success: (result) => {
                 removeConf();
                 let confs = result;
-                $.each(confs, function (i, conf) {
-                    addConf(conf);
+                $.each(confs, (i, conf) => {
+                    addConf(i, conf);
                 });
                 localStorage.setItem('conf', JSON.stringify(confs));
                 localStorage.setItem('version', JSON.stringify(curVersion));
@@ -267,7 +288,7 @@ $(function () {
         removeConf();
         let confs = JSON.parse(confString);
         $.each(confs, function (i, conf) {
-            addConf(conf);
+            addConf(i, conf);
         });
         console.log('use cached confs')
     } else {
@@ -600,16 +621,54 @@ ${conf['remark']}`,
         } else
             target.closest('.conference').find('.trigger').trigger('click');
     });
+
     //signout
     $logOutBtn.on('click', () => {
         localStorage.removeItem('user');
         window.location.reload();
     });
 
-
+    $mySearchInput.on("keyup", function (e) {
+        clearTimeout($.data(this, 'timer'));
+        if (e.keyCode === 13)
+            searchMyConf($(this).val());
+        else
+            $(this).data('timer', setTimeout(() => {
+                searchMyConf($mySearchInput.val());
+            }, 200));
+    });
     //back to top
     var $backToTop = $('#back-to-top');
+
+
+    function getDocHeight() {
+        var D = document;
+        return Math.max(
+            D.body.scrollHeight, D.documentElement.scrollHeight,
+            D.body.offsetHeight, D.documentElement.offsetHeight,
+            D.body.clientHeight, D.documentElement.clientHeight
+        );
+    }
+
+    //auto load when scroll
     $(window).scroll(() => {
+        console.log($(window).scrollTop(), $(window).height(), $(document).height());
+        if ($searchInput.val().trim() ===''&& $(window).scrollTop() + $(window).height() > $(document).height()*0.9) {
+            console.log('bottom');
+            $.each($('#confs .conference.d-none'), (i, a) => {
+                if (i < showLimit) {
+                    $(a).removeClass('d-none');
+                }
+            });
+        }
+
+        // clearTimeout($.data(this, 'timer'));
+        // $(this).data('timer', setTimeout(() => {
+        //     console.log(1);
+        //     $.each($('#confs .conference.d-none'), (i, a) => {
+        //         if (i < firstShow)                
+        //     });
+        // }, 1000));
         if ($(window).scrollTop() > 1000) {
             $backToTop.fadeIn(500);
         } else {
