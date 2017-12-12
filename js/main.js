@@ -214,7 +214,7 @@ $(function () {
         $.ajax({
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10&filter[skip]=0',
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=topic&filter[fields][info]&filter[fields][top_info]',
-            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=deadline&filter[fields][info]&filter[fields][top_info]&filter[skip]=160',
+            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=deadline&filter[fields][info]&filter[fields][top_info]&filter[skip]=130',
             type: 'get',
             success: (result) => {
                 removeConf();
@@ -282,7 +282,8 @@ $(function () {
     const patchConf = () => $.ajax({
         type: 'patch',
         data: {
-            conferences: userInfo.conferences
+            // conferences: userInfo['conferences']
+            conferences: userInfo['conferences']
         },
         url: `http://do1.bilabila.tk:3000/api/users/${user.userId}?access_token=${user.id}`,
     });
@@ -476,11 +477,13 @@ $(function () {
             }
         });
     }
+
     $confModal.delegate('.delete', 'click', () => {
         findAndRemove(userInfo['conferences'], 'topic', $target.data('topic'));
         console.log(userInfo['conferences']);
-        console.log($target.data('topic'));
+        // console.log($target.data('topic'));
         patchConf().done(() => {
+            // console.log(userInfo['conferences']);
             $target.addClass('d-none');
             if (userInfo['conferences'] === undefined || userInfo['conferences'].length === 0)
                 $noConf.removeClass('d-none');
