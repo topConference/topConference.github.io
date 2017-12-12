@@ -76,6 +76,7 @@ $(function () {
     let $target;
     let user = {};
     let userInfo = {};
+    const deadlineLimit = '20171206';
     const $noConf = $('#noConf');
     const $primaryAlert = $('#primaryAlert');
     const $dangerAlert = $('#dangerAlert');
@@ -168,7 +169,8 @@ $(function () {
     }
 
     const addConf = (conf) => {
-        $confs.append(Mustache.render(confTemplate, conf));
+        if (conf['deadline'] > deadlineLimit)
+            $confs.append(Mustache.render(confTemplate, conf));
     }
 
     const searchMyConf = (input) => {
@@ -214,7 +216,7 @@ $(function () {
         $.ajax({
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[fields][info]&filter[top_info]&filter[limit]=10&filter[skip]=0',
             // url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=topic&filter[fields][info]&filter[fields][top_info]',
-            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=deadline&filter[fields][info]&filter[fields][top_info]&filter[skip]=130',
+            url: 'http://do1.bilabila.tk:3000/api/conferences?filter[order]=deadline&filter[fields][info]&filter[fields][top_info]',
             type: 'get',
             success: (result) => {
                 removeConf();
