@@ -46,7 +46,7 @@ function initMap() {
         }
     });
     geocoder = new google.maps.Geocoder();
-    console.log(geocoder);
+    // console.log(geocoder);
 }
 
 const initClient = () => {
@@ -112,7 +112,7 @@ $(function () {
                     position: results[0].geometry.location
                 });
             } else {
-                console.log('Geocode was not successful for the following reason: ' + status);
+                // console.log('Geocode was not successful for the following reason: ' + status);
             }
         });
     }
@@ -155,13 +155,13 @@ $(function () {
                     $noConf.removeClass('d-none');
                 } else {
                     $.each(r.conferences, (i, conf) => {
-                        console.log(conf);
+                        // console.log(conf);
                         myAddConf(conf);
                     });
                 }
             },
             error: (e) => {
-                console.log(e);
+                // console.log(e);
             }
         });
     };
@@ -249,7 +249,7 @@ $(function () {
                 localStorage.setItem('version', JSON.stringify(curVersion));
             },
             error: function () {
-                console.log("error load confs");
+                // console.log("error load confs");
                 // myAlert($('#loadConfError'));
             }
         });
@@ -263,7 +263,7 @@ $(function () {
             datatype: 'json',
             success: (res) => {
                 user = res;
-                console.log(res);
+                // console.log(res);
                 localStorage.setItem('user', JSON.stringify(user));
                 getUser();
             },
@@ -290,9 +290,9 @@ $(function () {
         $.each(confs, function (i, conf) {
             addConf(i, conf);
         });
-        console.log('use cached confs')
+        // console.log('use cached confs')
     } else {
-        console.log('get remote confs')
+        // console.log('get remote confs')
         getConf();
     }
 
@@ -324,10 +324,10 @@ $(function () {
         }
         userInfo.conferences.push(data);
         //to do may be need to delete some key;
-        console.log(data);
+        // console.log(data);
         patchConf().done((r) => {
             myAddConf(data);
-            console.log(r);
+            // console.log(r);
             $infoAlert.text('add success')
             myAlert($('#infoAlert'));
         }).fail((e) => {
@@ -484,7 +484,7 @@ $(function () {
 
     //delete my conf
     const findAndRemove = (array, property, value) => {
-        console.log(array, property, value);
+        // console.log(array, property, value);
         array.forEach(function (result, index) {
             if (result[property] == value) {
                 array.splice(index, 1);
@@ -493,7 +493,7 @@ $(function () {
     }
 
     const findAndUpdate = (array, property, value, data) => {
-        console.log(array, property, value);
+        // console.log(array, property, value);
         array.forEach(function (result, index) {
             if (result[property] == value) {
                 array.splice(index, 1, data);
@@ -503,7 +503,7 @@ $(function () {
 
     $confModal.delegate('.delete', 'click', () => {
         findAndRemove(userInfo['conferences'], 'topic', $target.data('topic'));
-        console.log(userInfo['conferences']);
+        // console.log(userInfo['conferences']);
         // console.log($target.data('topic'));
         patchConf().done(() => {
             // console.log(userInfo['conferences']);
@@ -593,7 +593,7 @@ ${conf['remark']}`,
                     ]
                 }
             };
-            console.log(event);
+            // console.log(event);
             let request = gapi.client.calendar.events.insert({
                 'calendarId': 'primary',
                 'resource': event
@@ -652,9 +652,9 @@ ${conf['remark']}`,
 
     //auto load when scroll
     $(window).scroll(() => {
-        console.log($(window).scrollTop(), $(window).height(), $(document).height());
+        // console.log($(window).scrollTop(), $(window).height(), $(document).height());
         if ($searchInput.val().trim() ===''&& $(window).scrollTop() + $(window).height() > $(document).height()*0.9) {
-            console.log('bottom');
+            // console.log('bottom');
             $.each($('#confs .conference.d-none'), (i, a) => {
                 if (i < showLimit) {
                     $(a).removeClass('d-none');
